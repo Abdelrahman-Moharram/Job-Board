@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block headerElse %}
+    <div class="bradcam_area bradcam_bg_1">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="bradcam_text">
+                        <h3>
+                            Blog
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock headerElse %}
+
+{% block body %}
+    <section class="blog_area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto mb-5 mb-lg-0">
+                    <div class="blog_left_sidebar">
+                        
+                        {% if posts|length > 0 %}
+                            {% for post in posts %}
+                            <article class="blog_item">
+                                <div class="blog_item_img">
+                                    <img class="card-img rounded-0" src="{{post.post_image.url}}" alt="">
+                                    <a href="#" class="blog_item_date">
+                                        <h3>{{post.published_at | date:"d"}}</h3>
+                                        <p>{{post.published_at | date:"M"}}</p>
+                                    </a>
+                                </div>
+
+                                <div class="blog_details">
+                                    <a class="d-inline-block" href="{% url 'blog:single_blog' post.id %}">
+                                        <h2>{{post.post_title}}</h2>
+                                    </a>
+                                    <p>{{post.post_Content}}</p>
+                                    <ul class="blog-info-link">
+                                        <li><a href="#"><i class="fa fa-user"></i>Travel, Lifestyle</a></li>
+                                        <li><a href="#"><i class="fa fa-comments"></i> 03 Comments</a></li>
+                                    </ul>
+                                </div>
+                            </article>
+                            {% endfor %}
+                            {% else %}
+                            <h2 class="">There is No Posts Yet</h2>
+                        {% endif %}
+                            
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    {% endblock body %}

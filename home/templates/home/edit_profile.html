@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block headerElse %}
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+	<div class="row">
+	    <div class="col-xl-12">
+		<div class="bradcam_text">
+		    <h3>Update info</h3>
+		</div>
+	    </div>
+	</div>
+    </div>
+</div>
+{% endblock headerElse %}
+{% block body %}
+    
+
+
+
+<div class="container">
+	<div class="row">
+	    <div class="col-md-10 mx-auto mt-5 mb-5 white-bg">
+		    <form method="POST" enctype="multipart/form-data">
+			{% csrf_token %}
+				<div class="col-md-12">
+					<div class="input_field">
+						
+						{% bootstrap_form user %}
+						{% bootstrap_form userTips %}
+					</div>
+				</div>
+			    <div class="col-md-12">
+				<div class="submit_btn">
+				    <button class="boxed-btn3 w-100" type="submit">Save</button>
+				</div>
+			    </div>
+			</div>
+		    </form>
+	</div>
+	
+</div>
+
+{% endblock body %}

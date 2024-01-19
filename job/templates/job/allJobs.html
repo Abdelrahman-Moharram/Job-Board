@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block headerElse %}
+    <div class="bradcam_area bradcam_bg_1">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="bradcam_text">
+                        <h3>
+                            {{jobs|length}} + Jobs Available
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock headerElse %}
+{% block body %}
+
+    <div class="job_listing_area plus_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="job_filter white-bg">
+                        <div class="form_inner white-bg">
+                            <h3>Filter</h3>
+                            <form method="GET">
+                                {% bootstrap_form filter.form %}
+                                <div class="reset_btn">
+                                    <button  class="boxed-btn3 w-100" type="submit">Filter</button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="recent_joblist_wrap">
+                        <div class="recent_joblist white-bg ">
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <h4>Job Listing</h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="serch_cat d-flex justify-content-end">
+                                        <select>
+                                            <option data-display="Most Recent">Most Recent</option>
+                                            <option value="1">Marketer</option>
+                                            <option value="2">Wordpress </option>
+                                            <option value="4">Designer</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="job_lists m-0">
+                        <div class="row">
+                        {% for job in jobs %}
+                            <div class="col-lg-12 col-md-12">
+                                <div class="single_jobs white-bg d-flex justify-content-between">
+                                    <div class="jobs_left d-flex align-items-center">
+                                        <div class="thumb">
+                                            <img src="{{job.image.url}}" width="60px" alt="">
+                                        </div>
+                                        <div class="jobs_conetent">
+                                            <a href="{% url 'jobs:jobDetail' job.slug %}"><h4>{{job.title}}</h4></a>
+                                            <div class="links_locat d-flex align-items-center">
+                                                <div class="location">
+                                                    <p> <i class="fa fa-map-marker"></i> California, USA</p>
+                                                </div>
+                                                <div class="location">
+                                                    <p> <i class="fa fa-clock-o"></i> {{job.job_type}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="jobs_right">
+                                        <div class="apply_now">
+                                            <a class="heart_mark" href="#"> <i class="fa fa-heart"></i> </a>
+                                            <a href="{% url 'jobs:jobDetail' job.slug %}" class="boxed-btn3">Apply Now</a>
+                                        </div>
+                                        <div class="date">
+                                            <p>Date line: {{job.publishedAt |date:'d M o'}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                
+                                {% if jobs.has_other_pages %}
+                                    
+                                
+                                    <div class="pagination_wrap">
+                                        <ul>
+                                            
+                                            {% if jobs.has_previous %}
+                                                <li><a href="?page={{jobs.previous_page_number}}"> <i class="ti-angle-left"></i> </a></li>
+                                            {% endif %}
+
+                                            {% for job in jobs.paginator.page_range %}
+                                                <li><a href="?page={{job}}"><span>{{job}}</span></a></li>
+                                            {% endfor %}
+
+                                            
+                                            
+                                            {% if jobs.has_next %}
+                                                <li><a href="?page={{jobs.next_page_number}}"> <i class="ti-angle-right"></i> </a></li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function closeNotify(id){
+            var card = document.getElementsByClassName("cards");
+            card[id].style.display = "none";
+
+        }
+
+        var notNum =  document.getElementById("notify-num");
+        if (notNum.innerHTML == 0){
+            notNum.style.visibility = "hidden";
+        }
+        else if(notNum.innerHTML > 99){
+            notNum.innerHTML = "+99";
+        }
+
+    </script>
+
+{% endblock body %}

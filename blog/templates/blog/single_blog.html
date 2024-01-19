@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block headerElse %}
+    <div class="bradcam_area bradcam_bg_1">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="bradcam_text">
+                        <h3>
+                            Single Blog
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock headerElse %}
+
+{% block body %}
+
+   <section class="blog_area single-post-area section-padding">
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-10 mx-auto posts-list">
+               <div class="single-post">
+                  <div class="feature-img">
+                     <img class="img-fluid" src="{{post.post_image.url}}" alt="">
+                  </div>
+                  <div class="blog_details">
+                     <h2>{{post.post_title}}</h2>
+                     <ul class="blog-info-link mt-3 mb-4">
+                        <li><a href="#"><i class="fa fa-user"></i> Travel, Lifestyle</a></li>
+                        <li><a href="#"><i class="fa fa-comments"></i>{{comments | length}} Comments</a></li>
+                     </ul>
+                     <p class="excert">
+                        {{post.post_content}}
+                     </p>
+                  </div>
+               </div>
+               <div class="navigation-top">
+                  <div class="d-sm-flex justify-content-between text-center">
+                     <p class="like-info"><span class="align-middle"><i class="fa fa-heart"></i></span> Lily and 4
+                        people like this</p>
+                     <div class="col-sm-4 text-center my-2 my-sm-0">
+                        <!-- <p class="comment-count"><span class="align-middle"><i class="fa fa-comment"></i></span> 06 Comments</p> -->
+                     </div>
+                     <ul class="social-icons">
+                        <li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                        <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                     </ul>
+                  </div>
+                  
+               </div>
+               
+               <div class="comments-area">
+                  <h4>{{comments | length}} Comments</h4>
+
+                  {% for comment in comments %}
+                     <div class="comment-list">
+                        <div class="single-comment justify-content-between d-flex">
+                           <div class="user justify-content-between d-flex">
+                              <div class="thumb">
+                                 <img src="{{comment.user.userImage.url}}" alt="">
+                              </div>
+                              <div class="desc">
+                                 <div class="d-flex align-items-center">
+                                    <h5>
+                                       <a href="#" style="color: black !important;">{{comment.user.user.first_name}} {{comment.user.user.last_name}}</a><br>
+                                    </h5>
+                                 </div>
+                                 <p class="date" style="font-size: 10px;line-height:normal;margin-top:5px">{{comment.added_at}}</p>
+                                 <p class="comment" style="color: black;margin-left:20px;margin-top:10px">
+                                    {{comment.comment}}
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  {% endfor %}
+                  
+               </div>
+               <div class="comment-form">
+                  <h4>Leave a Comment</h4>
+                  <form class="form-contact comment_form' %}" method="POST" enctype="multipart/form-data">
+                     {% csrf_token %}
+                     <div class="row">
+                        <div class="col-12">
+                           <div class="form-group">
+                              <textarea class="form-control w-100" name="comment" id="comment" cols="30" rows="9"
+                                 placeholder="Write Comment"></textarea>
+                           </div>
+                        </div>
+                        <div class="col-sm-6">
+                           <div class="form-group">
+                              <input class="form-control" name="image" id="name" type="file">
+                           </div>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <button type="submit" class="button button-contactForm btn_1 boxed-btn">Send Message</button>
+                     </div>
+                  </form>
+               </div>
+            </div>
+            
+         </div>
+      </div>
+   </section>
+ 
+{% endblock body %}

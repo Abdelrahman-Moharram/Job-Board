@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% block headerElse %}
+    <div class="bradcam_area bradcam_bg_1">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="bradcam_text">
+                        <h3>
+                            <img src="{{userTips.userImage.url}}" width="50px" alt="">
+                            {{user.username}}
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock headerElse %}
+
+{% block body %}
+
+    <div class="job_details_area">
+        <div class="container">
+            <div class="row">
+               
+                <div class="col-lg-10 mx-auto">
+                    <div class="job_sumary">
+                        <div class="summery_header">
+                            <h3>Info Summary</h3>
+                        </div>
+                        <div class="job_content">
+                            <ul>
+                                <li>Name: <span>{{user.first_name}} {{user.last_name}}</span></li>
+                                <li>Email: <span>{{user.email}}</span></li>
+                                <li>Job Title: <span>{{userTips.job_title}}</span></li>
+                                <li>Joined at: <span>{{user.date_joined | date:'d M o'}}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    
+                    {% if request.user == user %}
+                        
+                        <a href="{% url 'home:edit_user' request.user.username %}" class="boxed-btn3">Edit Info</a>
+                        
+                    {% endif %}
+                        
+                </div>
+
+                <div class="job_lists m-0">
+                    <div class="row">
+                        <div class="summery_header">
+                            <h3>Jobs You Added </h3>
+                        </div>
+                    {% for job in jobs %}
+                        <div class="col-lg-12 col-md-12">
+                            <div class="single_jobs white-bg d-flex justify-content-between">
+                                <div class="jobs_left d-flex align-items-center">
+                                    <div class="thumb">
+                                        <img src="{{job.image.url}}" width="60px" alt="">
+                                    </div>
+                                    <div class="jobs_conetent">
+                                        <a href="{% url 'jobs:jobDetail' job.slug %}"><h4>{{job.title}}</h4></a>
+                                        <div class="links_locat d-flex align-items-center">
+                                            <div class="location">
+                                                <p> <i class="fa fa-map-marker"></i> California, USA</p>
+                                            </div>
+                                            <div class="location">
+                                                <p> <i class="fa fa-clock-o"></i> {{job.job_type}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="jobs_right">
+                                    <div class="apply_now">
+                                        <a class="heart_mark" href="#"> <i class="fa fa-heart"></i> </a>
+                                        <a href="{% url 'jobs:jobDetail' job.slug %}" class="boxed-btn3">Apply Now</a>
+                                    </div>
+                                    <div class="date">
+                                        <p>Date line: {{job.publishedAt |date:'d M o'}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                        
+                    {% for app in apps %}
+                      
+                    <div class="col-10 mx-auto">
+                        <div class="single_catagory">
+                            <a href="jobs.html"><h4>Job: {{app.jobId}}</h4></a>
+                            <p> <span>Protifolio: </span><a href="{{app.protifolio}}">protifolio</a></p>
+                            <p> <span>CV: </span><a href="media/{{app.cv}}">CV</a></p>
+                            <p> <span>Cover Letter: </span>{{app.coverLetter}}</p>
+                            <p> <span>applyed at: </span>{{app.applyAt}}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock body %}
